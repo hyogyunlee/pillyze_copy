@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "631611078050",
+    "project_id": "pillyzecopy",
+    "storage_bucket": "pillyzecopy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631611078050:android:2c4ca1c89e1ac31919aefb",
+        "android_client_info": {
+          "package_name": "com.example.pillyze_copy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxUUKg4PbO6CcADM2SK-nSDQKyDPTMpqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
