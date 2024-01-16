@@ -23,6 +23,15 @@ Future<DocumentSnapshot?> fetchUserInfo(String? uid) async {
   return null;
 }
 
+Future<bool> isSignedInKakao() async {
+  try {
+    await kakao.UserApi.instance.accessTokenInfo();
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 void main() async{
   KakaoSdk.init(nativeAppKey: '5923bfe08d5e8f3ce5e231bb228b7907');
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +64,27 @@ class _MyHomePageState extends State<MyHomePage> {
   final kakaoviewModel = kakao_MainViewModel(KakaoLogin());
 
   @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  void checkLoginStatus() async {
+    bool isKakaoLoggedIn = await isSignedInKakao();
+    if (isKakaoLoggedIn) {
+      kakao.User? user = await kakao.UserApi.instance.me();
+      final userInfo = await fetchUserInfo(user.id.toString());
+      final hasEmptyFields = userInfo == null;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => hasEmptyFields ? const OnBoardingPage() : const next(),
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: GestureDetector(
@@ -67,30 +97,30 @@ class _MyHomePageState extends State<MyHomePage> {
           body: Center(
             child: SingleChildScrollView(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 80.0, vertical: 10),
-                        child: kakaoButton(
-                            ontap: () async {
-                              await kakaoviewModel.login();
-                              kakao.User? user= await kakao.UserApi.instance.me();
-                              final userInfo = await fetchUserInfo(user.id.toString());
-                              final hasEmptyFields = userInfo == null;
-                              if (kakaoviewModel.isLogined) {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => hasEmptyFields ? const OnBoardingPage() : const next(),
-                                  ),
-                                );
-                              }
-                              setState(() {});
-                            },
-                            text: '카카오톡으로 로그인')
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80.0, vertical: 10),
+                    child: kakaoButton(
+                      ontap: () async {
+                        if (!kakaoviewModel.isLogined) {
+                          await kakaoviewModel.login();
+                          kakao.User? user = await kakao.UserApi.instance.me();
+                          final userInfo = await fetchUserInfo(user.id.toString());
+                          final hasEmptyFields = userInfo == null;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => hasEmptyFields ? const OnBoardingPage() : const next(),
+                            ),
+                          );
+                        }
+                      },
+                      text: '카카오톡으로 로그인',
                     ),
-                  ]
+                  ),
+                ],
               ),
             ),
           ),

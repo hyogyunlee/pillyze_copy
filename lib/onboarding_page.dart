@@ -110,8 +110,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         'disease_status':_selectedDiseaseStatus.toString().split('.').last,
         'allergy_status':_selectedAllergyStatus.toString().split('.').last,
         'drug_status':_selectedDrugStatus.toString().split('.').last,
-        'email':user!.kakaoAccount!.email ?? '',
+        //'email':user!.kakaoAccount!.email ?? '',
         'photoURL':user!.kakaoAccount!.profile!.profileImageUrl!,
+        'marketing_agree':Check4,
         'notification':false,
       };
       if(int.parse(_monthController.text)<=_dateTime.month && int.parse(_dayController.text)<=_dateTime.day){
