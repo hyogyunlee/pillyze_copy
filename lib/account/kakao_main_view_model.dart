@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:pillyze_copy/kakao_social_login.dart';
+import 'package:pillyze_copy/account/kakao_social_login.dart';
 
 class kakao_MainViewModel {
   final kakao_SocialLogin kakao_socialLogin;

@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:lottie/lottie.dart';
-import 'package:pillyze_copy/next.dart';
-import 'package:pillyze_copy/textfield.dart';
-import 'package:pillyze_copy/agree.dart';
+import 'package:pillyze_copy/page/home_page.dart';
+import 'package:pillyze_copy/component/textfield.dart';
+import 'package:pillyze_copy/page/onboarding/agree.dart';
 
 enum HealthStatus { none, breastfeeding, pregnant, planning }
 enum SmokeStatus {smoke, nonsmoke}
@@ -13,14 +13,14 @@ enum DiseaseStatus {no, yes}
 enum AllergyStatus {no, yes}
 enum DrugStatus {no, yes}
 
-class OnBoardingPage extends StatefulWidget {
-  const OnBoardingPage({super.key});
+class onboarding_page extends StatefulWidget {
+  const onboarding_page({super.key});
 
   @override
-  State<OnBoardingPage> createState() => _OnBoardingPageState();
+  State<onboarding_page> createState() => _onboarding_pageState();
 }
 
-class _OnBoardingPageState extends State<OnBoardingPage> {
+class _onboarding_pageState extends State<onboarding_page> {
 
   late final PageController _pageController;
   int _currentPageIndex = 0;
@@ -1383,7 +1383,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const next(),
+                                builder: (context) => const home_page(),
                               ),
                             );
                           },

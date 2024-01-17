@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart' as kakao;
-import 'package:pillyze_copy/kakao_button.dart';
-import 'package:pillyze_copy/kakao_main_view_model.dart';
-import 'package:pillyze_copy/kakao_login.dart';
-import 'package:pillyze_copy/onboarding_page.dart';
-import 'package:pillyze_copy/next.dart';
+import 'package:pillyze_copy/component/kakao_button.dart';
+import 'package:pillyze_copy/account/kakao_main_view_model.dart';
+import 'package:pillyze_copy/account/kakao_login.dart';
+import 'package:pillyze_copy/page/onboarding/onboarding_page.dart';
+import 'package:pillyze_copy/page/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pillyze_copy/firebase_options.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => hasEmptyFields ? const OnBoardingPage() : const next(),
+          builder: (context) => hasEmptyFields ? const onboarding_page() : const home_page(),
         ),
       );
     }
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => hasEmptyFields ? const OnBoardingPage() : const next(),
+                              builder: (context) => hasEmptyFields ? const onboarding_page() : const home_page(),
                             ),
                           );
                         }
