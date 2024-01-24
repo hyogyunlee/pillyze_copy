@@ -14,7 +14,8 @@ Future<void> signOut() async {
 }
 
 class home_page extends StatefulWidget {
-  const home_page({super.key});
+  final String loginMethod;
+  const home_page({super.key, required this.loginMethod});
 
   @override
   State<home_page> createState() => _HomePageState();
@@ -40,50 +41,72 @@ class _HomePageState extends State<home_page> {
   }
 
   Widget _bottomWidget() {
+    List<BottomNavigationBarItem> items = [
+      const BottomNavigationBarItem(
+        icon: Padding(
+          padding: EdgeInsets.only(bottom: 5),
+          child: Icon(
+            Icons.home_rounded,
+            color: Colors.indigo,
+          ),
+        ),
+        label: '운동 보조식품',
+        activeIcon: Padding(
+          padding: EdgeInsets.only(bottom: 5),
+          child: Icon(Icons.home_rounded, color: Colors.indigo),
+        ),
+      ),
+      BottomNavigationBarItem(
+        icon: Padding(
+          padding: EdgeInsets.only(bottom: 5),
+          child: Icon(
+            Icons.shopping_cart,
+            color: widget.loginMethod == 'freeTest' ? Colors.grey : Colors.indigo,
+          ),
+        ),
+        label: '운동 자세',
+      ),
+    ];
+
     return BottomNavigationBar(
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
-        // Color(0xff1e2c5b)
-        backgroundColor: Colors.white,
-        onTap: (int index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
-        },
-        currentIndex: _currentPageIndex,
-        unselectedItemColor: Colors.indigo,
-        selectedItemColor: Colors.indigo,
-        selectedFontSize: 20,
-        unselectedLabelStyle:
-        const TextStyle(fontWeight: FontWeight.w600, color: Colors.blue),
-        selectedLabelStyle:
-        const TextStyle(fontWeight: FontWeight.w600, color: Colors.blue),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: Icon(
-                  Icons.home_rounded,
-                  color: Colors.indigo,
-                )),
-            label: '운동 보조식품',
-            activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: Icon(Icons.home_rounded, color: Colors.indigo)),
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: Icon(
-                  Icons.shopping_cart,
-                  color: Colors.indigo,
-                )),
-            label: '운동 자세',
-            activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: Icon(Icons.shopping_cart, color: Colors.indigo)),
-          ),
-        ]);
+      elevation: 0,
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.white,
+      onTap: (int index) {
+        if (index == 1 && widget.loginMethod == 'freeTest') {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('MAIDA'),
+                content: const Text('로그인 후 진행해주세요'),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('확인'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return;
+        }
+        setState(() {
+          _currentPageIndex = index;
+        });
+      },
+      currentIndex: _currentPageIndex,
+      unselectedItemColor: Colors.indigo,
+      selectedItemColor: Colors.indigo,
+      selectedFontSize: 20,
+      unselectedLabelStyle:
+      const TextStyle(fontWeight: FontWeight.w600, color: Colors.blue),
+      selectedLabelStyle:
+      const TextStyle(fontWeight: FontWeight.w600, color: Colors.blue),
+      items: items,
+    );
   }
 
   @override

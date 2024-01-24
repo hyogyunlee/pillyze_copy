@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => hasEmptyFields ? const onboarding_page() : const home_page(),
+          builder: (context) => hasEmptyFields ? const onboarding_page(loginMethod: 'kakaoLogin') : const home_page(loginMethod: 'kakaoLogin'),
         ),
       );
     }
@@ -104,6 +104,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         horizontal: 80.0, vertical: 10),
                     child: kakaoButton(
                       ontap: () async {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => onboarding_page(loginMethod: 'freeTest'),
+                            ),
+                          );
+                      },
+                      text: '1회 무료체험',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80.0, vertical: 10),
+                    child: kakaoButton(
+                      ontap: () async {
                         if (!kakaoviewModel.isLogined) {
                           await kakaoviewModel.login();
                           kakao.User? user = await kakao.UserApi.instance.me();
@@ -112,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => hasEmptyFields ? const onboarding_page() : const home_page(),
+                              builder: (context) => hasEmptyFields ? const onboarding_page(loginMethod: 'kakaoLogin') : home_page(loginMethod: 'kakaoLogin'),
                             ),
                           );
                         }

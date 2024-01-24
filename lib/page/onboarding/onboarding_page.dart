@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,21 +14,39 @@ enum DiseaseStatus {no, yes}
 enum AllergyStatus {no, yes}
 enum DrugStatus {no, yes}
 
-class onboarding_page extends StatefulWidget {
-  const onboarding_page({super.key});
+Future<String> _generateToken() async {
+  var rng = new Random();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  String token;
 
+  // Firestore에서 'users' 컬렉션을 조회하여 토큰들을 가져옵니다.
+  var snapshot = await firestore.collection('users').get();
+  var existingTokens = snapshot.docs.map((doc) => doc.id).toList();
+
+  do {
+    token = rng.nextInt(1000000).toString(); // 랜덤 토큰 생성
+  } while (existingTokens.contains(token)); // 이미 존재하는 토큰들 중에 없을 때까지 반복
+
+  print("Generated Token: $token");
+
+  return token;
+}
+
+class onboarding_page extends StatefulWidget {
+  final String loginMethod;
+  const onboarding_page({Key? key, required this.loginMethod}) : super(key: key);
   @override
   State<onboarding_page> createState() => _onboarding_pageState();
 }
 
 class _onboarding_pageState extends State<onboarding_page> {
-
   late final PageController _pageController;
   int _currentPageIndex = 0;
   DateTime _dateTime = DateTime.now();
   late DateTime date;
 
-  kakao.User? user;
+  String user='';
+  kakao.User? kakao_user;
   final currentUser = FirebaseAuth.instance.currentUser;
 
   bool femaleSelect = false;
@@ -98,41 +117,45 @@ class _onboarding_pageState extends State<onboarding_page> {
       isKakaoLoggedIn = false;
     }
 
-    if (isKakaoLoggedIn) {
-      user = await kakao.UserApi.instance.me();
-      Map<String, dynamic> userData = {
-        'gender': maleSelect ? 'male' : 'female',
-        'nickname': nameEditingController.text,
-        'birthday': date,
-        'health_concerns':selectedHealthConcerns,
-        'health_status':_selectedHealthStatus.toString().split('.').last,
-        'smoke_status':_selectedSmokeStatus.toString().split('.').last,
-        'disease_status':_selectedDiseaseStatus.toString().split('.').last,
-        'allergy_status':_selectedAllergyStatus.toString().split('.').last,
-        'drug_status':_selectedDrugStatus.toString().split('.').last,
-        //'email':user!.kakaoAccount!.email ?? '',
-        'photoURL':user!.kakaoAccount!.profile!.profileImageUrl!,
-        'marketing_agree':Check4,
-        'notification':false,
-      };
-      if(int.parse(_monthController.text)<=_dateTime.month && int.parse(_dayController.text)<=_dateTime.day){
-        userData['age'] = _dateTime.year-int.parse(_yearController.text);
-      }
-      else{
-        userData['age'] = _dateTime.year-int.parse(_yearController.text)-1;
-      }
-
-      if (_selectedDiseaseStatus == DiseaseStatus.yes) {
-        userData['disease'] = selectedDiseaseItems;
-      }
-
-      if(_selectedDrugStatus==DrugStatus.yes){
-        userData['drug'] = selectedDrugItems;
-      }
-
-      await firestore.collection('users').doc(user?.id.toString()).set(userData, SetOptions(merge: true));
-
+    if (widget.loginMethod == 'freeTest') {
+      String basic_user = await _generateToken();
+      user = basic_user;
     }
+    else{
+      kakao_user = await kakao.UserApi.instance.me();
+      user = kakao_user!.id.toString();
+    }
+    Map<String, dynamic> userData = {
+      'gender': maleSelect ? 'male' : 'female',
+      'nickname': nameEditingController.text,
+      'birthday': date,
+      'health_concerns':selectedHealthConcerns,
+      'health_status':_selectedHealthStatus.toString().split('.').last,
+      'smoke_status':_selectedSmokeStatus.toString().split('.').last,
+      'disease_status':_selectedDiseaseStatus.toString().split('.').last,
+      'allergy_status':_selectedAllergyStatus.toString().split('.').last,
+      'drug_status':_selectedDrugStatus.toString().split('.').last,
+      //'email':user!.kakaoAccount!.email ?? '',
+      'photoURL':kakao_user?.kakaoAccount!.profile!.profileImageUrl!,
+      'marketing_agree':Check4,
+      'notification':false,
+    };
+    if(int.parse(_monthController.text)<=_dateTime.month && int.parse(_dayController.text)<=_dateTime.day){
+      userData['age'] = _dateTime.year-int.parse(_yearController.text);
+    }
+    else{
+      userData['age'] = _dateTime.year-int.parse(_yearController.text)-1;
+    }
+
+    if (_selectedDiseaseStatus == DiseaseStatus.yes) {
+      userData['disease'] = selectedDiseaseItems;
+    }
+
+    if(_selectedDrugStatus==DrugStatus.yes){
+      userData['drug'] = selectedDrugItems;
+    }
+
+    await firestore.collection('users').doc(user).set(userData, SetOptions(merge: true));
   }
 
   void nextPage() {
@@ -173,7 +196,7 @@ class _onboarding_pageState extends State<onboarding_page> {
     _yearController.addListener(updateButtonState);
     _monthController.addListener(updateButtonState);
     _dayController.addListener(updateButtonState);
-    isDiseaseSelected = List<bool>.filled(diseaseItems.length, false); // 모든 질환 항목들을 '선택되지 않음' 상태로 초기화
+    isDiseaseSelected = List<bool>.filled(diseaseItems.length, false);
     isDrugSelected = List<bool>.filled(drugItems.length, false);
   }
 
@@ -1383,7 +1406,7 @@ class _onboarding_pageState extends State<onboarding_page> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const home_page(),
+                                builder: (context) => home_page(loginMethod:widget.loginMethod),
                               ),
                             );
                           },
