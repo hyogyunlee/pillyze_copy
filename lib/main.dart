@@ -4,7 +4,6 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:pillyze_copy/component/kakao_button.dart';
 import 'package:pillyze_copy/account/kakao_main_view_model.dart';
 import 'package:pillyze_copy/account/kakao_login.dart';
-import 'package:pillyze_copy/page/onboarding/onboarding_page.dart';
 import 'package:pillyze_copy/page/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pillyze_copy/firebase_options.dart';
@@ -72,13 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void checkLoginStatus() async {
     bool isKakaoLoggedIn = await isSignedInKakao();
     if (isKakaoLoggedIn) {
-      kakao.User? user = await kakao.UserApi.instance.me();
-      final userInfo = await fetchUserInfo(user.id.toString());
-      final hasEmptyFields = userInfo == null;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => hasEmptyFields ? const onboarding_page(loginMethod: 'kakaoLogin') : const home_page(loginMethod: 'kakaoLogin'),
+          builder: (context) =>home_page(loginMethod: 'kakaoLogin'),
         ),
       );
     }
@@ -99,20 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80.0, vertical: 10),
-                    child: kakaoButton(
-                      ontap: () async {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => onboarding_page(loginMethod: 'freeTest'),
-                            ),
-                          );
-                      },
-                      text: '1회 무료체험',
-                    ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Image.asset('assets/maida.png'),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -121,18 +106,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       ontap: () async {
                         if (!kakaoviewModel.isLogined) {
                           await kakaoviewModel.login();
-                          kakao.User? user = await kakao.UserApi.instance.me();
-                          final userInfo = await fetchUserInfo(user.id.toString());
-                          final hasEmptyFields = userInfo == null;
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => hasEmptyFields ? const onboarding_page(loginMethod: 'kakaoLogin') : home_page(loginMethod: 'kakaoLogin'),
+                              builder: (context) => home_page(loginMethod: 'kakaoLogin'),
                             ),
                           );
                         }
                       },
                       text: '카카오톡으로 로그인',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80.0, vertical: 10),
+                    child: ElevatedButton(
+                      onPressed: (){
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => home_page(loginMethod: 'freeTest'),
+                          ),
+                        );
+                      },
+                      child:Text('서비스 둘러보기',),
                     ),
                   ),
                 ],

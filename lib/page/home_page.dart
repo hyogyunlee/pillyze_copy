@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pillyze_copy/page/3D/AI_3D_posture.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:pillyze_copy/main.dart';
-import 'package:pillyze_copy/page/recommend/AI_recommend.dart';
+import 'package:pillyze_copy/page/ai_pose/healthSelect.dart';
+import 'package:pillyze_copy/page/survey/AI_recommend.dart';
 
 Future<void> signOut() async {
   try {
@@ -33,9 +33,9 @@ class _HomePageState extends State<home_page> {
   Widget? _bodyWidget() {
     switch (_currentPageIndex) {
       case 0:
-        return const AI_recommend();
+        return AI_recommend(loginMethod: widget.loginMethod);
       case 1:
-        return const AI_3D_posture();
+        return const Select();
     }
     return null;
   }
@@ -61,7 +61,7 @@ class _HomePageState extends State<home_page> {
           padding: EdgeInsets.only(bottom: 5),
           child: Icon(
             Icons.shopping_cart,
-            color: widget.loginMethod == 'freeTest' ? Colors.grey : Colors.indigo,
+            color: Colors.indigo,
           ),
         ),
         label: '운동 자세',
@@ -73,26 +73,6 @@ class _HomePageState extends State<home_page> {
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.white,
       onTap: (int index) {
-        if (index == 1 && widget.loginMethod == 'freeTest') {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('MAIDA'),
-                content: const Text('로그인 후 진행해주세요'),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('확인'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-          return;
-        }
         setState(() {
           _currentPageIndex = index;
         });
@@ -118,7 +98,9 @@ class _HomePageState extends State<home_page> {
             actions: <Widget>[
               ElevatedButton(
                 onPressed: () async {
-                  await signOut();
+                  if(widget.loginMethod=='kakaoLogin') {
+                    await signOut();
+                  }
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
