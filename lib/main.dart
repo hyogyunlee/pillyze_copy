@@ -117,10 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: '카카오톡으로 로그인',
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80.0, vertical: 10),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.9,
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.yellowAccent),
+                      ),
                       onPressed: (){
                         Navigator.pushReplacement(
                           context,
@@ -129,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         );
                       },
-                      child:Text('서비스 둘러보기',),
+                      child:Text('서비스 둘러보기',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
                     ),
                   ),
                 ],

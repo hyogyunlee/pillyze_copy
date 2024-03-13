@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pillyze_copy/page/survey/mobile/info_page_mobile.dart';
+import 'package:pillyze_copy/page/survey/pad/info_page_pad.dart';
 
-class StartPage extends StatefulWidget {
+class StartPage_pad extends StatefulWidget {
   final String loginMethod;
-  const StartPage({super.key, required this.loginMethod});
+  const StartPage_pad({super.key, required this.loginMethod});
 
   @override
-  State<StartPage> createState() => _StartPageState();
+  State<StartPage_pad> createState() => _StartPage_pad_State();
 }
-
-class _StartPageState extends State<StartPage>{
+class _StartPage_pad_State extends State<StartPage_pad>{
   @override
   Widget build(BuildContext context) {
     stepBox(String step, String stepTitle) {
@@ -18,10 +17,10 @@ class _StartPageState extends State<StartPage>{
           children: [
             Text(step,
                 style: TextStyle(
-                    fontSize: 23, fontWeight: FontWeight.w600)),
+                    fontSize: 30, fontWeight: FontWeight.w600)),
             Text(stepTitle,
                 style: TextStyle(
-                    fontSize: 13, fontWeight: FontWeight.w600))
+                    fontSize: 20, fontWeight: FontWeight.w600))
           ],
         ),
       );
@@ -53,7 +52,7 @@ class _StartPageState extends State<StartPage>{
               child: Text(
                 '헬스테일러 AI 운동 보조식품 추천 서비스',
                 style: TextStyle(
-                    fontSize: 23, fontWeight: FontWeight.w600),
+                    fontSize: 40, fontWeight: FontWeight.w600),
               ),
             ),
             Row(
@@ -63,7 +62,7 @@ class _StartPageState extends State<StartPage>{
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Container(
-                    width: 10,
+                    width: 80,
                     height: 5,
                     color: Colors.black,
                   ),
@@ -72,7 +71,7 @@ class _StartPageState extends State<StartPage>{
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Container(
-                    width: 10,
+                    width: 80,
                     height: 5,
                     color: Colors.black,
                   ),
@@ -86,7 +85,7 @@ class _StartPageState extends State<StartPage>{
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => InfoPage(loginMethod: widget.loginMethod,),
+                      builder: (context) => InfoPage_pad(loginMethod: widget.loginMethod,),
                     ));
               },
               child: SizedBox(

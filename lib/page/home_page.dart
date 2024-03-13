@@ -33,7 +33,7 @@ class _HomePageState extends State<home_page> {
   Widget? _bodyWidget() {
     switch (_currentPageIndex) {
       case 0:
-        return AI_recommend(loginMethod: widget.loginMethod);
+        return AI_recommend(loginMethod: widget.loginMethod,);
       case 1:
         return const Select();
     }

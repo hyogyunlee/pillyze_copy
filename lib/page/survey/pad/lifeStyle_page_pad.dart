@@ -1,15 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:pillyze_copy/page/survey/mobile/result_page_mobile.dart';
+import 'package:pillyze_copy/page/survey/pad/result_page_pad.dart';
 
-class LifeStylePage extends StatefulWidget {
+class LifeStylePage_pad extends StatefulWidget {
   final String loginMethod;
-  const LifeStylePage({super.key,required this.loginMethod});
+  const LifeStylePage_pad({super.key, required this.loginMethod});
   @override
-  State<LifeStylePage> createState() => _LifeStylePageState();
+  State<LifeStylePage_pad> createState() => _LifeStylePage_pad_State();
 }
 
-class _LifeStylePageState extends State<LifeStylePage> {
+class _LifeStylePage_pad_State extends State<LifeStylePage_pad> {
   CarouselController carouselController = CarouselController();
   int _current = 0;
   Map<int, String> _selectedOptions = {};
@@ -56,13 +56,13 @@ class _LifeStylePageState extends State<LifeStylePage> {
               const Text(
                 'Step 2. 질병, 부작용 설문조사',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 maxLines: 1,
               ),
               const Text(
                 '그동안의 경험을 알려주세요.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 maxLines: 1,
               ),
               const SizedBox(
@@ -173,7 +173,7 @@ class _LifeStylePageState extends State<LifeStylePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
                 child: SizedBox(
                   width: 500,
                   child: Stack(
@@ -233,7 +233,7 @@ class _LifeStylePageState extends State<LifeStylePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ResultPage(loginMethod: widget.loginMethod,),
+                            builder: (context) => ResultPage_pad(loginMethod: widget.loginMethod,),
                           ));
                     },
                     child: const Text(

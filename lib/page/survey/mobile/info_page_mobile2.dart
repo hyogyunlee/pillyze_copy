@@ -4,7 +4,8 @@ import 'package:pillyze_copy/data.dart';
 import 'package:pillyze_copy/page/survey/mobile/lifeStyle_page_mobile.dart';
 
 class InfoPage2 extends StatefulWidget {
-  const InfoPage2({super.key});
+  final String loginMethod;
+  const InfoPage2({super.key,required this.loginMethod});
 
   @override
   State<InfoPage2> createState() => _InfoPage2State();
@@ -50,7 +51,7 @@ class _InfoPage2State extends State<InfoPage2> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LifeStylePage(),
+                          builder: (context) => LifeStylePage(loginMethod: widget.loginMethod,),
                         ));
                   } else {
                     showDialog(

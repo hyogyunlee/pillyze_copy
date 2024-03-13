@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:pillyze_copy/data.dart';
 import 'package:pillyze_copy/page/home_page.dart';
 
-class ResultPage extends StatefulWidget {
+class ResultPage_pad extends StatefulWidget {
   final String loginMethod;
-  const ResultPage({super.key, required this.loginMethod});
+  const ResultPage_pad({super.key, required this.loginMethod});
 
   @override
-  State<ResultPage> createState() => _ResultPageState();
+  State<ResultPage_pad> createState() => _ResultPage_pad_State();
 }
 
-class _ResultPageState extends State<ResultPage> {
+class _ResultPage_pad_State extends State<ResultPage_pad> {
   @override
   Widget build(BuildContext context) {
-    // final width = MediaQuery.of(context).size.width;
-    // final height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -35,7 +32,7 @@ class _ResultPageState extends State<ResultPage> {
                   'STEP 3. 결과 분석 완료!',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 23,
+                      fontSize: 30,
                       fontWeight: FontWeight.w600),
                 ),
               ),
@@ -44,7 +41,7 @@ class _ResultPageState extends State<ResultPage> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: Text(
-                  '${Data.staticName}님 만을 위한\n운동 보조식품 분석 결과는?',
+                  '${Data.staticName}님 만을 위한 운동 보조식품 분석 결과는?',
                   style: const TextStyle(
                       color: Colors.black,
                       fontSize: 30,
@@ -57,32 +54,33 @@ class _ResultPageState extends State<ResultPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: Container(
-                      width: 160,
-                      height: 160,
+                      width: 300,
+                      height: 200,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.white),
                       child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             '이만큼 드세요!',
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 '단백질',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                               Padding(
@@ -91,7 +89,7 @@ class _ResultPageState extends State<ResultPage> {
                                   '20g',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -99,12 +97,13 @@ class _ResultPageState extends State<ResultPage> {
                             ],
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 'BCAA',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                               Padding(
@@ -113,7 +112,7 @@ class _ResultPageState extends State<ResultPage> {
                                   '20g',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -121,12 +120,13 @@ class _ResultPageState extends State<ResultPage> {
                             ],
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 '크레아틴',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                               Padding(
@@ -135,7 +135,7 @@ class _ResultPageState extends State<ResultPage> {
                                   '20g',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -150,7 +150,7 @@ class _ResultPageState extends State<ResultPage> {
                 // 2
                 Expanded(
                   child: Container(
-                    height: 160,
+                    height: 200,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
@@ -159,30 +159,8 @@ class _ResultPageState extends State<ResultPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('식단 분석!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                        TextButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  content: Text(
-                                    '동물성 단백질 보충제에 들어있는 콜레스트롤과 LDL은 님의 건강상태에 맞지 않아요.\n대신 식물성 단백질을 섭취하면 훨씬 더 안전한 운동을 즐길 수 있습니다.',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('닫기'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: Text('자세히 보기', style: TextStyle(color: Colors.black),),
-                        ),
+                        Text('식단 분석!', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                        Text('동물성 단백질 보충제에 들어있는 콜레스트롤과 LDL은 님의 건강상태에 맞지 않아요.\n대신 식물성 단백질을 섭취하면 훨씬 더 안전한 운동을 즐길 수 있습니다.', style: TextStyle(color: Colors.black, fontWeight:FontWeight.bold, fontSize: 20),),
                       ],
                     ),
                   ),

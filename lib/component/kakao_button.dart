@@ -15,17 +15,15 @@ class kakaoButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               color: Colors.yellowAccent[400]),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
                 'assets/kakao.png',
                 scale: 16,
               ),
-              const SizedBox(
-                width: 26,
-              ),
               Text(
                 text,
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
               )
             ],
           )),

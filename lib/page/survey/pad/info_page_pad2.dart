@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:pillyze_copy/components/q1.dart';
-import 'package:pillyze_copy/components/q2.dart';
-import 'package:pillyze_copy/components/q3.dart';
-import 'package:pillyze_copy/components/q4.dart';
+import 'package:pillyze_copy/components/q5.dart';
 import 'package:pillyze_copy/data.dart';
-import 'package:pillyze_copy/page/survey/mobile/info_page_mobile2.dart';
+import 'package:pillyze_copy/page/survey/pad/lifeStyle_page_pad.dart';
 
-class InfoPage extends StatefulWidget {
+class InfoPage2_pad extends StatefulWidget {
   final String loginMethod;
-  const InfoPage({super.key, required this.loginMethod});
+  const InfoPage2_pad({super.key, required this.loginMethod});
 
   @override
-  State<InfoPage> createState() => _InfoPageState();
+  State<InfoPage2_pad> createState() => _InfoPage2_pad_State();
 }
 
-class _InfoPageState extends State<InfoPage> {
+class _InfoPage2_pad_State extends State<InfoPage2_pad> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,55 +30,28 @@ class _InfoPageState extends State<InfoPage> {
                 padding: EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   'STEP 1. 신체 정보 입력',
-                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 12.0),
                 child: Text(
                   '당신은 어떤 사람인가요?',
-                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                 ),
               ),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width/2,
-                          height: 250,
-                          child: Q1()),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width/2,
-                          height: 250,
-                          child: Q2()),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width/2,
-                          height: 250,
-                          child: Q3()),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width/2,
-                          height: 250,
-                          child: Q4()),
-                    ],
-                  ),
-                ],
+              SizedBox(
+                  width: 550,
+                  height: 550,
+                  child: Q5()
               ),
-              SizedBox(height:50),
               InkWell(
                 onTap: () {
-                  if (Data.staticQ1 == true &&
-                      Data.staticQ2 == true &&
-                      Data.staticQ3 == true &&
-                      Data.staticQ4 == true) {
+                  if (Data.staticQ5 == true) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => InfoPage2(loginMethod: widget.loginMethod,),
+                          builder: (context) => LifeStylePage_pad(loginMethod: widget.loginMethod,),
                         ));
                   } else {
                     showDialog(
@@ -99,7 +69,7 @@ class _InfoPageState extends State<InfoPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('다음 질문',
+                      Text('문항보기 ',
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w700)),
